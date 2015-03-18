@@ -4,7 +4,8 @@
 var https = require('https'),
     fs = require('fs'),
     express = require('express'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    Parse = require('parse').Parse;
 
 // Load SSL Certificate details, and the apps Webhook key
 var privateKey = fs.readFileSync('private-key.pem'),
@@ -18,9 +19,17 @@ var serverOptions = {
 
 // Express middleware to enforce security using the Webhook Key
 function validateWebhookRequest(req, res, next) {
-  if (req.get('X-Parse-Webhook-Key') !== webhookKey) {
-    return errorResponse(res, 'Unauthorized Request.');
-  }
+  if (req.get('X-Parse-Webhook-Key') !== webhookKey) return errorResponse(res, 'Unauthorized Request.');
+  next();
+}
+
+// Parse middleware to inflate a beforeSave object to a Parse.Object
+function inflateParseObject(req, res, next) {
+  var object = req.body.object;
+  var className = object.className;
+  var parseObject = new Parse.Object(className);
+  parseObject._finishFetch(object);
+  req.body.object = parseObject;
   next();
 }
 
@@ -37,25 +46,28 @@ function errorResponse(res, message) {
 var app = express();
 var jsonParser = bodyParser.json();
 
+app.use(validateWebhookRequest);
+app.use(jsonParser);
+
 /*
  * Define routes here
  */
 
-app.post('/success', validateWebhookRequest, jsonParser, function(req, res) {
+app.post('/success', inflateParseObject, function(req, res) {
   var requestData = req.body;
    
-  requestData.object['extra'] = 'fizzbuzz';
+  requestData.object.set('extra', 'fizzbuzz');
 
   successResponse(res, requestData.object);
 });
 
-app.post('/error', validateWebhookRequest, jsonParser, function(req, res) {
+app.post('/error', function(req, res) {
   var requestData = req.body;
 
   errorResponse(res, "No thanks.");
 });
 
-app.post('/hello', validateWebhookRequest, jsonParser, function(req, res) {
+app.post('/hello', function(req, res) {
   var requestData = req.body;
 
   successResponse(res, "Hello!");
