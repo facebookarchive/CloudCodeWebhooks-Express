@@ -1,6 +1,6 @@
-# ParseOCC-Express
+# CloudCodeWebhooks-Express
 
-An ExpressJS based Open Cloud Code example server.
+An ExpressJS based Parse Cloud Code Webhooks server.
 
 ### Getting Started
 
@@ -10,7 +10,7 @@ Using npm, install the required modules:
 npm install
 ```
 
-Open Cloud Code requires an HTTPS connection, and so a valid SSL certificate is required.  Self-signed certificates are not accepted.  
+Cloud Code Webhooks requires an HTTPS connection, and so a valid SSL certificate is required.  Self-signed certificates are not accepted.  
 
 Update the locations at the top of `server.js` to point to your certificate and private key files, or place the files in this folder named `private-key.pem` and `certificate.pem`.  These files will be ignored by git.
 

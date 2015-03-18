@@ -1,4 +1,4 @@
-// Parse Open Cloud Code example for Node.JS with Express JS
+// Parse Cloud Code Webhooks example for Express JS
 
 // Require Node Modules
 var https = require('https'),
@@ -83,6 +83,6 @@ app.use(function(err, req, res, next) {
 
 var server = https.createServer(serverOptions, app);
 server.listen(443, function() {
-  console.log('Open Cloud Code Server Running on port 443.');
+  console.log('Cloud Code Webhooks server running on port 443.');
 });
 
