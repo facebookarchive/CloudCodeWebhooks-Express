@@ -60,13 +60,16 @@ app.post('/success', inflateParseObject, function(req, res) {
 });
 
 app.post('/error', function(req, res) {
-  var requestData = req.body;
   errorResponse(res, "No thanks.");
 });
 
 app.post('/hello', function(req, res) {
-  var requestData = req.body;
   successResponse(res, "Hello!");
+});
+
+app.post('/addNumbers', function(req, res) {
+  var params = req.body.params;
+  successResponse(res, params.a + params.b);
 });
 
 app.use(function(err, req, res, next) {
