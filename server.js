@@ -55,21 +55,17 @@ app.use(jsonParser);
 
 app.post('/success', inflateParseObject, function(req, res) {
   var requestData = req.body;
-   
   requestData.object.set('extra', 'fizzbuzz');
-
   successResponse(res, requestData.object);
 });
 
 app.post('/error', function(req, res) {
   var requestData = req.body;
-
   errorResponse(res, "No thanks.");
 });
 
 app.post('/hello', function(req, res) {
   var requestData = req.body;
-
   successResponse(res, "Hello!");
 });
 
