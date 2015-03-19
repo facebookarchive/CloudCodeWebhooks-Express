@@ -2,6 +2,8 @@
 
 An ExpressJS based Parse Cloud Code Webhooks server.
 
+For deployment on Heroku, switch to the Heroku branch.
+
 ### Getting Started
 
 Using npm, install the required modules:
