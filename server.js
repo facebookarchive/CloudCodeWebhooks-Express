@@ -1,25 +1,19 @@
 // Parse Cloud Code Webhooks example for Express JS
 
 // Require Node Modules
-var https = require('https'),
+var http = require('http'),
     fs = require('fs'),
     express = require('express'),
     bodyParser = require('body-parser'),
     Parse = require('parse').Parse;
 
-// Load SSL Certificate details, and the apps Webhook key
-var privateKey = fs.readFileSync('private-key.pem'),
-    certificate = fs.readFileSync('certificate.pem'),
-    webhookKey = fs.readFileSync('webhook.key').toString().trim();
-
-var serverOptions = {
-  key: privateKey,
-  cert: certificate
-};
+var webhookKey = fs.readFileSync('webhook.key').toString().trim();
 
 // Express middleware to enforce security using the Webhook Key
 function validateWebhookRequest(req, res, next) {
-  if (req.get('X-Parse-Webhook-Key') !== webhookKey) return errorResponse(res, 'Unauthorized Request.');
+  console.log('TOUCHED');
+console.log(req.get('X-Parse-Webhook-Key'));
+//  if (req.get('X-Parse-Webhook-Key') !== webhookKey) return errorResponse(res, 'Unauthorized Request.');
   next();
 }
 
@@ -54,6 +48,7 @@ app.use(jsonParser);
  */
 
 app.post('/success', inflateParseObject, function(req, res) {
+console.log(req);
   var requestData = req.body;
   requestData.object.set('extra', 'fizzbuzz');
   successResponse(res, requestData.object);
@@ -80,9 +75,9 @@ app.use(function(err, req, res, next) {
 /*
  * Launch the HTTPS server
  */
-
-var server = https.createServer(serverOptions, app);
-server.listen(443, function() {
-  console.log('Cloud Code Webhooks server running on port 443.');
+var port = process.env.PORT || 443;
+var server = http.createServer(app);
+server.listen(port, function() {
+  console.log('Cloud Code Webhooks server running on port ' + port + '.');
 });
 
