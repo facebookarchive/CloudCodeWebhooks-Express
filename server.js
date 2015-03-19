@@ -1,4 +1,4 @@
-// Parse Cloud Code Webhooks example for Express JS
+// Parse Cloud Code Webhooks example for Express JS on Heroku
 
 // Require Node Modules
 var http = require('http'),
@@ -6,7 +6,8 @@ var http = require('http'),
     bodyParser = require('body-parser'),
     Parse = require('parse').Parse;
 
-var webhookKey = 'eeZ3PI5FykdaOExCZ72iB9UC8aF664ASgR01xZA3';
+// Make sure to set your Webhook key via heroku config set
+var webhookKey = process.env.get('WEBHOOK_KEY');
 
 // Express middleware to enforce security using the Webhook Key
 function validateWebhookRequest(req, res, next) {
