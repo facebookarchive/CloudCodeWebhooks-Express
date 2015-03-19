@@ -31,7 +31,7 @@ function successResponse(res, data) {
 
 function errorResponse(res, message) {
   message = message || true;
-  res.status(500).send({ "error" : message });
+  res.status(200).send({ "error" : message });
 }
 
 var app = express();
