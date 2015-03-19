@@ -1,37 +1,41 @@
-# CloudCodeWebhooks-Express
+# CloudCodeWebhooks-Express for Heroku
 
-An ExpressJS based Parse Cloud Code Webhooks server.
+An ExpressJS based Parse Cloud Code Webhooks server, ready for deployment to Heroku
 
 ### Getting Started
 
-Using npm, install the required modules:
+Locally, you should install the dependencies for development by running:
 
 ```
 npm install
 ```
 
-Cloud Code Webhooks requires an HTTPS connection, and so a valid SSL certificate is required.  Self-signed certificates are not accepted.  
+Cloud Code Webhooks requires an HTTPS connection, and so a valid SSL certificate is required.  Heroku will handle this for you.
 
-Update the locations at the top of `server.js` to point to your certificate and private key files, or place the files in this folder named `private-key.pem` and `certificate.pem`.  These files will be ignored by git.
-
-Create a file named `webhook.key` and in it place the secret key from the Parse.com settings for your app.
+Make sure you're logged into Heroku:
 
 ```
-echo "YourWebhookKeyHere" >> webhook.key
+heroku login
+```
+
+From the project folder, run:
+
+```
+heroku create
+```
+
+Add your Parse App Webhook Key to the Heroku app config variables:
+
+```
+heroku config:set WEBHOOK_KEY=yourwebhookkeyhere
 ```
 
 Create routes in `server.js` for your different cloud code triggers and cloud functions.  Examples are provided.
 
-Start the server to listen for connections:
+Deploy your app to Heroku:
 
 ```
-node server.js
+git push heroku master
 ```
 
-It's common to use a daemon like [forever](https://github.com/foreverjs/forever) to keep your script running in the background and for it to restart if it happens to crash.  You can install forever and start the daemon like so:
-
-```
-npm install forever -g
-forever start server.js
-```
-
+Using the URL of your Heroku app, set up your Webhooks in the Parse app dashboard.
