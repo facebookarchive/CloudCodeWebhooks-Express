@@ -6,7 +6,7 @@ var http = require('http'),
     bodyParser = require('body-parser'),
     Parse = require('parse').Parse;
 
-var webhookKey = 'aaa';
+var webhookKey = 'eeZ3PI5FykdaOExCZ72iB9UC8aF664ASgR01xZA3';
 
 // Express middleware to enforce security using the Webhook Key
 function validateWebhookRequest(req, res, next) {
