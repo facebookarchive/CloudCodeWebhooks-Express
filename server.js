@@ -7,7 +7,7 @@ var http = require('http'),
     Parse = require('parse').Parse;
 
 // Make sure to set your Webhook key via heroku config set
-var webhookKey = process.env.get('WEBHOOK_KEY');
+var webhookKey = process.env.WEBHOOK_KEY;
 
 // Express middleware to enforce security using the Webhook Key
 function validateWebhookRequest(req, res, next) {
