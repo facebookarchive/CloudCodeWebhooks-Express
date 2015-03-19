@@ -35,7 +35,8 @@ Create routes in `server.js` for your different cloud code triggers and cloud fu
 Deploy your app to Heroku:
 
 ```
-git push heroku master
+// This is pushing the local heroku branch to the remote master branch
+git push heroku heroku:master
 ```
 
 Using the URL of your Heroku app, set up your Webhooks in the Parse app dashboard.
