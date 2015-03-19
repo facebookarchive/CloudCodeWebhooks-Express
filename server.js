@@ -2,12 +2,11 @@
 
 // Require Node Modules
 var http = require('http'),
-    fs = require('fs'),
     express = require('express'),
     bodyParser = require('body-parser'),
     Parse = require('parse').Parse;
 
-var webhookKey = fs.readFileSync('webhook.key').toString().trim();
+var webhookKey = 'aaa';
 
 // Express middleware to enforce security using the Webhook Key
 function validateWebhookRequest(req, res, next) {
